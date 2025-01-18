@@ -1,1 +1,10 @@
 *.env
+*.env
+# Ignorer tous les répertoires
+*/
+
+# Inclure uniquement les répertoires qui commencent par un point
+!/.*/
+
+# Ignorer tout le contenu des répertoires inclus par défaut
+.*/*
