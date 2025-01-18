@@ -1,0 +1,106 @@
+[
+  {
+    "id": 1,
+    "message": "La commande Docker Compose a échoué avec le code 1. Erreur système:  Network juwju_networks  Removed\nError response from daemon: rpc error: code = FailedPrecondition desc = network 9p1lxam3fc3d2yma4kszw2t3f is in use by task affgowhm3hm86m4s0etl7wmv0\n",
+    "stack": "Error: La commande Docker Compose a échoué avec le code 1. Erreur système:  Network juwju_networks  Removed\nError response from daemon: rpc error: code = FailedPrecondition desc = network 9p1lxam3fc3d2yma4kszw2t3f is in use by task affgowhm3hm86m4s0etl7wmv0\n\n    at runDockerCompose (file:///opt/.scripts/UBUNTU/DENO/1013-docker-compose.ts:539:13)\n    at eventLoopTick (ext:core/01_core.js:175:7)\n    at async main (file:///opt/.scripts/UBUNTU/DENO/1013-docker-compose.ts:577:5)",
+    "firstOccurrence": "2025-01-07T11:00:39.192Z",
+    "lastOccurrence": "2025-01-07T11:17:41.253Z",
+    "count": 2
+  },
+  {
+    "id": 2,
+    "message": "No such file or directory (os error 2): readfile './erreurs.log': No such file or directory (os error 2): readfile './erreurs.log': No such file or directory (os error 2)",
+    "stack": "NotFound: No such file or directory (os error 2): readfile './erreurs.log': No such file or directory (os error 2): readfile './erreurs.log': No such file or directory (os error 2)\n    at Object.readTextFile (ext:deno_fs/30_fs.js:783:24)\n    at copyLogToClipboard (file:///opt/.scripts/UBUNTU/DENO/1013-docker-compose.ts:258:32)\n    at main (file:///opt/.scripts/UBUNTU/DENO/1013-docker-compose.ts:664:11)\n    at eventLoopTick (ext:core/01_core.js:175:7)",
+    "firstOccurrence": "2025-01-07T11:00:39.195Z",
+    "lastOccurrence": "2025-01-07T11:48:15.688Z",
+    "count": 4
+  },
+  {
+    "id": 3,
+    "message": "cmd is not defined",
+    "stack": "ReferenceError: cmd is not defined\n    at runDockerCompose (file:///opt/.scripts/UBUNTU/DENO/1013-docker-compose.ts:602:38)\n    at eventLoopTick (ext:core/01_core.js:175:7)\n    at async main (file:///opt/.scripts/UBUNTU/DENO/1013-docker-compose.ts:654:5)",
+    "firstOccurrence": "2025-01-07T11:48:15.683Z",
+    "lastOccurrence": "2025-01-07T12:01:35.928Z",
+    "count": 2
+  },
+  {
+    "id": 4,
+    "message": "Failed to spawn 'xclip': entity not found: entity not found: entity not found",
+    "stack": "NotFound: Failed to spawn 'xclip': entity not found: entity not found: entity not found\n    at spawnChildInner (ext:runtime/40_process.js:184:17)\n    at spawnChild (ext:runtime/40_process.js:208:10)\n    at Command.spawn (ext:runtime/40_process.js:483:12)\n    at copyLogToClipboard (file:///opt/.scripts/UBUNTU/DENO/1013-docker-compose.ts:320:27)\n    at eventLoopTick (ext:core/01_core.js:175:7)\n    at async main (file:///opt/.scripts/UBUNTU/DENO/1013-docker-compose.ts:716:5)",
+    "firstOccurrence": "2025-01-07T12:07:44.162Z",
+    "lastOccurrence": "2025-01-07T18:25:46.481Z",
+    "count": 8
+  },
+  {
+    "id": 5,
+    "message": "Cannot get 'stderr': 'stderr' is not piped",
+    "stack": "TypeError: Cannot get 'stderr': 'stderr' is not piped\n    at Object.get stderr (ext:runtime/40_process.js:346:17)\n    at runDockerCompose (file:///opt/.scripts/UBUNTU/DENO/1013-docker-compose.ts:644:21)\n    at eventLoopTick (ext:core/01_core.js:175:7)\n    at async main (file:///opt/.scripts/UBUNTU/DENO/1013-docker-compose.ts:704:5)",
+    "firstOccurrence": "2025-01-07T18:16:18.933Z",
+    "lastOccurrence": "2025-01-07T18:55:12.061Z",
+    "count": 3
+  },
+  {
+    "id": 6,
+    "message": "La commande Docker Compose a échoué avec le code 1. Erreur système:  Network mentheentretien_network  Creating\n Network mentheentretien_network  Created\n Container 32011-ftd-public  Creating\nError response from daemon: invalid config for network juwju_networks: invalid endpoint settings:\nuser specified IP address is supported only when connecting to networks with user configured subnets\n",
+    "stack": "Error: La commande Docker Compose a échoué avec le code 1. Erreur système:  Network mentheentretien_network  Creating\n Network mentheentretien_network  Created\n Container 32011-ftd-public  Creating\nError response from daemon: invalid config for network juwju_networks: invalid endpoint settings:\nuser specified IP address is supported only when connecting to networks with user configured subnets\n\n    at runDockerCompose (file:///opt/.scripts/UBUNTU/DENO/1013-docker-compose.ts:647:15)\n    at eventLoopTick (ext:core/01_core.js:175:7)\n    at async main (file:///opt/.scripts/UBUNTU/DENO/1013-docker-compose.ts:704:5)",
+    "firstOccurrence": "2025-01-07T18:58:23.280Z",
+    "lastOccurrence": "2025-01-07T18:58:23.280Z",
+    "count": 1
+  },
+  {
+    "id": 7,
+    "message": "La commande Docker Compose a échoué avec le code 1. Erreur système:  Network mentheentretien_network  Creating\n Network mentheentretien_network  Created\n Container 32011-ftd-public  Creating\n Container 32011-ftd-public  Created\nGracefully stopping... (press Ctrl+C again to force)\nError response from daemon: could not find a network matching network mode mentheentretien_network: network mentheentretien_network not found\n",
+    "stack": "Error: La commande Docker Compose a échoué avec le code 1. Erreur système:  Network mentheentretien_network  Creating\n Network mentheentretien_network  Created\n Container 32011-ftd-public  Creating\n Container 32011-ftd-public  Created\nGracefully stopping... (press Ctrl+C again to force)\nError response from daemon: could not find a network matching network mode mentheentretien_network: network mentheentretien_network not found\n\n    at runDockerCompose (file:///opt/.scripts/UBUNTU/DENO/1013-docker-compose.ts:647:15)\n    at eventLoopTick (ext:core/01_core.js:175:7)\n    at async main (file:///opt/.scripts/UBUNTU/DENO/1013-docker-compose.ts:704:5)",
+    "firstOccurrence": "2025-01-07T19:05:37.040Z",
+    "lastOccurrence": "2025-01-07T19:05:37.040Z",
+    "count": 1
+  },
+  {
+    "id": 8,
+    "message": "La commande Docker Compose a échoué avec le code 1. Erreur système: time=\"2025-01-07T14:15:10-05:00\" level=warning msg=\"The \\\"APP_ID\\\" variable is not set. Defaulting to a blank string.\"\ntime=\"2025-01-07T14:15:10-05:00\" level=warning msg=\"The \\\"SERVICE_ID\\\" variable is not set. Defaulting to a blank string.\"\ntime=\"2025-01-07T14:15:10-05:00\" level=warning msg=\"The \\\"MICROSERVICE_ID\\\" variable is not set. Defaulting to a blank string.\"\ntime=\"2025-01-07T14:15:10-05:00\" level=warning msg=\"The \\\"MICROSERVICE_VERSION\\\" variable is not set. Defaulting to a blank string.\"\ntime=\"2025-01-07T14:15:10-05:00\" level=warning msg=\"The \\\"APP_ID\\\" variable is not set. Defaulting to a blank string.\"\ntime=\"2025-01-07T14:15:10-05:00\" level=warning msg=\"The \\\"SERVICE_ID\\\" variable is not set. Defaulting to a blank string.\"\ntime=\"2025-01-07T14:15:10-05:00\" level=warning msg=\"The \\\"MICROSERVICE_ID\\\" variable is not set. Defaulting to a blank string.\"\ntime=\"2025-01-07T14:15:10-05:00\" level=warning msg=\"The \\\"MICROSERVICE_VERSION\\\" variable is not set. Defaulting to a blank string.\"\ntime=\"2025-01-07T14:15:10-05:00\" level=warning msg=\"The \\\"MICROSERVICE_NAME\\\" variable is not set. Defaulting to a blank string.\"\ntime=\"2025-01-07T14:15:10-05:00\" level=warning msg=\"The \\\"MICROSERVICE_ID\\\" variable is not set. Defaulting to a blank string.\"\ntime=\"2025-01-07T14:15:10-05:00\" level=warning msg=\"The \\\"MICROSERVICE_VERSION\\\" variable is not set. Defaulting to a blank string.\"\ntime=\"2025-01-07T14:15:10-05:00\" level=warning msg=\"The \\\"MICROSERVICE_NAME\\\" variable is not set. Defaulting to a blank string.\"\ntime=\"2025-01-07T14:15:10-05:00\" level=warning msg=\"The \\\"APP_NAME\\\" variable is not set. Defaulting to a blank string.\"\ntime=\"2025-01-07T14:15:10-05:00\" level=warning msg=\"The \\\"APP_ID\\\" variable is not set. Defaulting to a blank string.\"\ntime=\"2025-01-07T14:15:10-05:00\" level=warning msg=\"The \\\"APP_NAME\\\" variable is not set. Defaulting to a blank string.\"\ntime=\"2025-01-07T14:15:10-05:00\" level=warning msg=\"The \\\"APP_ID\\\" variable is not set. Defaulting to a blank string.\"\ntime=\"2025-01-07T14:15:10-05:00\" level=warning msg=\"The \\\"APP_ID\\\" variable is not set. Defaulting to a blank string.\"\ntime=\"2025-01-07T14:15:10-05:00\" level=warning msg=\"The \\\"MICROSERVICE_ID\\\" variable is not set. Defaulting to a blank string.\"\ntime=\"2025-01-07T14:15:10-05:00\" level=warning msg=\"The \\\"MICROSERVICE_VERSION\\\" variable is not set. Defaulting to a blank string.\"\ntime=\"2025-01-07T14:15:10-05:00\" level=warning msg=\"The \\\"MICROSERVICE_NAME\\\" variable is not set. Defaulting to a blank string.\"\ntime=\"2025-01-07T14:15:10-05:00\" level=warning msg=\"The \\\"EXTERNAL_MICROSERVICE_NAME\\\" variable is not set. Defaulting to a blank string.\"\ntime=\"2025-01-07T14:15:10-05:00\" level=warning msg=\"The \\\"MICROSERVICE_NAME\\\" variable is not set. Defaulting to a blank string.\"\ntime=\"2025-01-07T14:15:10-05:00\" level=warning msg=\"The \\\"APP_ID\\\" variable is not set. Defaulting to a blank string.\"\ntime=\"2025-01-07T14:15:10-05:00\" level=warning msg=\"The \\\"APP_NAME\\\" variable is not set. Defaulting to a blank string.\"\nunable to get image '-': Error response from daemon: invalid reference format\n",
+    "stack": "Error: La commande Docker Compose a échoué avec le code 1. Erreur système: time=\"2025-01-07T14:15:10-05:00\" level=warning msg=\"The \\\"APP_ID\\\" variable is not set. Defaulting to a blank string.\"\ntime=\"2025-01-07T14:15:10-05:00\" level=warning msg=\"The \\\"SERVICE_ID\\\" variable is not set. Defaulting to a blank string.\"\ntime=\"2025-01-07T14:15:10-05:00\" level=warning msg=\"The \\\"MICROSERVICE_ID\\\" variable is not set. Defaulting to a blank string.\"\ntime=\"2025-01-07T14:15:10-05:00\" level=warning msg=\"The \\\"MICROSERVICE_VERSION\\\" variable is not set. Defaulting to a blank string.\"\ntime=\"2025-01-07T14:15:10-05:00\" level=warning msg=\"The \\\"APP_ID\\\" variable is not set. Defaulting to a blank string.\"\ntime=\"2025-01-07T14:15:10-05:00\" level=warning msg=\"The \\\"SERVICE_ID\\\" variable is not set. Defaulting to a blank string.\"\ntime=\"2025-01-07T14:15:10-05:00\" level=warning msg=\"The \\\"MICROSERVICE_ID\\\" variable is not set. Defaulting to a blank string.\"\ntime=\"2025-01-07T14:15:10-05:00\" level=warning msg=\"The \\\"MICROSERVICE_VERSION\\\" variable is not set. Defaulting to a blank string.\"\ntime=\"2025-01-07T14:15:10-05:00\" level=warning msg=\"The \\\"MICROSERVICE_NAME\\\" variable is not set. Defaulting to a blank string.\"\ntime=\"2025-01-07T14:15:10-05:00\" level=warning msg=\"The \\\"MICROSERVICE_ID\\\" variable is not set. Defaulting to a blank string.\"\ntime=\"2025-01-07T14:15:10-05:00\" level=warning msg=\"The \\\"MICROSERVICE_VERSION\\\" variable is not set. Defaulting to a blank string.\"\ntime=\"2025-01-07T14:15:10-05:00\" level=warning msg=\"The \\\"MICROSERVICE_NAME\\\" variable is not set. Defaulting to a blank string.\"\ntime=\"2025-01-07T14:15:10-05:00\" level=warning msg=\"The \\\"APP_NAME\\\" variable is not set. Defaulting to a blank string.\"\ntime=\"2025-01-07T14:15:10-05:00\" level=warning msg=\"The \\\"APP_ID\\\" variable is not set. Defaulting to a blank string.\"\ntime=\"2025-01-07T14:15:10-05:00\" level=warning msg=\"The \\\"APP_NAME\\\" variable is not set. Defaulting to a blank string.\"\ntime=\"2025-01-07T14:15:10-05:00\" level=warning msg=\"The \\\"APP_ID\\\" variable is not set. Defaulting to a blank string.\"\ntime=\"2025-01-07T14:15:10-05:00\" level=warning msg=\"The \\\"APP_ID\\\" variable is not set. Defaulting to a blank string.\"\ntime=\"2025-01-07T14:15:10-05:00\" level=warning msg=\"The \\\"MICROSERVICE_ID\\\" variable is not set. Defaulting to a blank string.\"\ntime=\"2025-01-07T14:15:10-05:00\" level=warning msg=\"The \\\"MICROSERVICE_VERSION\\\" variable is not set. Defaulting to a blank string.\"\ntime=\"2025-01-07T14:15:10-05:00\" level=warning msg=\"The \\\"MICROSERVICE_NAME\\\" variable is not set. Defaulting to a blank string.\"\ntime=\"2025-01-07T14:15:10-05:00\" level=warning msg=\"The \\\"EXTERNAL_MICROSERVICE_NAME\\\" variable is not set. Defaulting to a blank string.\"\ntime=\"2025-01-07T14:15:10-05:00\" level=warning msg=\"The \\\"MICROSERVICE_NAME\\\" variable is not set. Defaulting to a blank string.\"\ntime=\"2025-01-07T14:15:10-05:00\" level=warning msg=\"The \\\"APP_ID\\\" variable is not set. Defaulting to a blank string.\"\ntime=\"2025-01-07T14:15:10-05:00\" level=warning msg=\"The \\\"APP_NAME\\\" variable is not set. Defaulting to a blank string.\"\nunable to get image '-': Error response from daemon: invalid reference format\n\n    at runDockerCompose (file:///opt/.scripts/UBUNTU/DENO/1013-docker-compose.ts:647:15)\n    at eventLoopTick (ext:core/01_core.js:175:7)\n    at async main (file:///opt/.scripts/UBUNTU/DENO/1013-docker-compose.ts:704:5)",
+    "firstOccurrence": "2025-01-07T19:15:10.602Z",
+    "lastOccurrence": "2025-01-07T19:15:10.602Z",
+    "count": 1
+  },
+  {
+    "id": 9,
+    "message": "La commande Docker Compose a échoué avec le code 1. Erreur système:  Network devreos_network  Creating\n Network devreos_network  Created\n Container 22011-ftd-public  Creating\n Container 22011-ftd-public  Created\nGracefully stopping... (press Ctrl+C again to force)\nError response from daemon: could not find a network matching network mode devreos_network: network devreos_network not found\n",
+    "stack": "Error: La commande Docker Compose a échoué avec le code 1. Erreur système:  Network devreos_network  Creating\n Network devreos_network  Created\n Container 22011-ftd-public  Creating\n Container 22011-ftd-public  Created\nGracefully stopping... (press Ctrl+C again to force)\nError response from daemon: could not find a network matching network mode devreos_network: network devreos_network not found\n\n    at runDockerCompose (file:///opt/.scripts/UBUNTU/DENO/1013-docker-compose.ts:647:15)\n    at eventLoopTick (ext:core/01_core.js:175:7)\n    at async main (file:///opt/.scripts/UBUNTU/DENO/1013-docker-compose.ts:704:5)",
+    "firstOccurrence": "2025-01-07T19:17:52.795Z",
+    "lastOccurrence": "2025-01-07T19:17:52.795Z",
+    "count": 1
+  },
+  {
+    "id": 10,
+    "message": "La commande Docker Compose a échoué avec le code 1. Erreur système:  Network juwju_networks  Removed\nError response from daemon: rpc error: code = FailedPrecondition desc = network 0uuzxzj7ggizsfiej3e183on7 is in use by task 2ofbqn68ecnbypgvre2sgwk9p\n",
+    "stack": "Error: La commande Docker Compose a échoué avec le code 1. Erreur système:  Network juwju_networks  Removed\nError response from daemon: rpc error: code = FailedPrecondition desc = network 0uuzxzj7ggizsfiej3e183on7 is in use by task 2ofbqn68ecnbypgvre2sgwk9p\n\n    at runDockerCompose (file:///opt/.scripts/UBUNTU/DENO/1013-docker-compose.ts:647:15)\n    at eventLoopTick (ext:core/01_core.js:175:7)\n    at async runDockerCompose (file:///opt/.scripts/UBUNTU/DENO/1013-docker-compose.ts:673:14)\n    at async main (file:///opt/.scripts/UBUNTU/DENO/1013-docker-compose.ts:704:5)",
+    "firstOccurrence": "2025-01-07T19:19:27.731Z",
+    "lastOccurrence": "2025-01-07T19:20:11.435Z",
+    "count": 2
+  },
+  {
+    "id": 11,
+    "message": "Le fichier 0030-docker-compose.yml n'existe pas",
+    "stack": "Error: Le fichier 0030-docker-compose.yml n'existe pas\n    at validateFile (file:///opt/.scripts/UBUNTU/DENO/1013-docker-compose.ts:527:11)\n    at eventLoopTick (ext:core/01_core.js:175:7)\n    at async runDockerCompose (file:///opt/.scripts/UBUNTU/DENO/1013-docker-compose.ts:726:5)\n    at async main (file:///opt/.scripts/UBUNTU/DENO/1013-docker-compose.ts:812:5)",
+    "firstOccurrence": "2025-01-15T10:20:19.265Z",
+    "lastOccurrence": "2025-01-15T10:20:19.265Z",
+    "count": 1
+  },
+  {
+    "id": 12,
+    "message": "La commande Docker Compose a échoué avec le code 15. Erreur système: service \"calcom_seed\" depends on undefined service \"devreos_cal_db\": invalid compose project\n",
+    "stack": "Error: La commande Docker Compose a échoué avec le code 15. Erreur système: service \"calcom_seed\" depends on undefined service \"devreos_cal_db\": invalid compose project\n\n    at runDockerCompose (file:///opt/.scripts/UBUNTU/DENO/1013-docker-compose.ts:754:15)\n    at eventLoopTick (ext:core/01_core.js:175:7)\n    at async main (file:///opt/.scripts/UBUNTU/DENO/1013-docker-compose.ts:812:5)",
+    "firstOccurrence": "2025-01-17T10:43:20.433Z",
+    "lastOccurrence": "2025-01-17T10:43:20.433Z",
+    "count": 1
+  },
+  {
+    "id": 13,
+    "message": "La commande Docker Compose a échoué avec le code 15. Erreur système: service \"calendar_app\" depends on undefined service \"devreos_cal_db\": invalid compose project\n",
+    "stack": "Error: La commande Docker Compose a échoué avec le code 15. Erreur système: service \"calendar_app\" depends on undefined service \"devreos_cal_db\": invalid compose project\n\n    at runDockerCompose (file:///opt/.scripts/UBUNTU/DENO/1013-docker-compose.ts:754:15)\n    at eventLoopTick (ext:core/01_core.js:175:7)\n    at async main (file:///opt/.scripts/UBUNTU/DENO/1013-docker-compose.ts:812:5)",
+    "firstOccurrence": "2025-01-17T10:45:45.480Z",
+    "lastOccurrence": "2025-01-17T10:45:45.480Z",
+    "count": 1
+  }
+]

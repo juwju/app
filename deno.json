@@ -1,0 +1,55 @@
+{
+  "tasks": {
+    // DOCKER-COMPOSE
+    "up": "deno run --allow-run --allow-net --allow-read --allow-write --allow-env ./.scripts/DOCKER-compose.ts -d up",
+    "uplog": "deno run --allow-run --allow-net --allow-read --allow-write --allow-env ./.scripts/DOCKER-compose.ts up",
+    "upbuild": "deno run --allow-run --allow-net --allow-read --allow-write --allow-env ./.scripts/DOCKER-compose.ts up --build",
+    "down": "deno run --allow-run --allow-net --allow-read --allow-write --allow-env ./.scripts/DOCKER-compose.ts -d down",
+    "downlog": "deno run --allow-run --allow-net --allow-read --allow-write --allow-env ./.scripts/DOCKER-compose.ts down",
+    "restart": "deno run --allow-run --allow-net --allow-read --allow-write --allow-env ./.scripts/DOCKER-compose.ts restart",
+
+    // DOCKER SWARM
+    "deploy": "deno run --allow-run --allow-net --allow-read --allow-env ./.scripts/DOCKER-deploy.ts deploy",
+    "stop": "deno run --allow-run --allow-net --allow-read --allow-env ./.scripts/DOCKER-deploy.ts rm",
+
+    // APP
+    "cloneftd": "deno run --allow-run --allow-net --allow-read --allow-env ./.scripts/014-clone-ftd.ts",
+    "update": "sudo deno run --allow-run --allow-read --allow-write --allow-net ./.scripts/0001-app-Deno_update.ts",
+    "diagsrv": "sudo deno run --allow-run --allow-read --allow-write --allow-net ./.scripts/0002-srv-server_diagnostic.ts",
+    "cvtvol": "deno run --allow-run --allow-read --allow-write --allow-net ./.scripts/01010-srv-deno-scripts/004-docker-tool.ts",
+    "installapp": "sudo deno run --allow-run --allow-read --allow-write --allow-net ./.scripts/01010-srv-deno-scripts/003-srv-installApp.ts"
+  },
+  "imports": {
+    "std/": "https://deno.land/std@0.208.0/",
+    "dotenv": "https://deno.land/x/dotenv@v3.2.2/mod.ts",
+    "oak": "https://deno.land/x/oak@v12.6.1/mod.ts"
+  },
+  "compilerOptions": {
+    "lib": ["deno.window"],
+    "strict": true
+  },
+  "fmt": {
+    "files": {
+      "include": ["src/"],
+      "exclude": ["src/testdata/"]
+    },
+    "options": {
+      "useTabs": false,
+      "lineWidth": 120,
+      "indentWidth": 2,
+      "singleQuote": true,
+      "proseWrap": "preserve"
+    }
+  },
+  "lint": {
+    "files": {
+      "include": ["src/"],
+      "exclude": ["src/testdata/"]
+    },
+    "rules": {
+      "tags": ["recommended"],
+      "include": ["ban-untagged-todo"],
+      "exclude": ["no-explicit-any"]
+    }
+  }
+}
