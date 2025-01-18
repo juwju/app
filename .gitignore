@@ -5,6 +5,6 @@
 
 # Inclure uniquement les répertoires qui commencent par un point
 !/.*/
-
+!deno.json
 # Ignorer tout le contenu des répertoires inclus par défaut
 .*/*
