@@ -1,147 +1,65 @@
-// Mettez à jour les importations std vers la dernière version
 import { Table } from "https://deno.land/x/cliffy@v1.0.0-rc.3/table/mod.ts";
 import * as colors from "https://deno.land/std@0.200.0/fmt/colors.ts";
 
-// Si vous importez des fichiers JSON, utilisez la syntaxe 'with' au lieu de 'assert'
-const data = {
-  "commands": [
-    {
-      "name": "upprod",
-      "variable": "101",
-      "description": "Lancement du Frontend en prod",
-      "environnement": "Production"
-    },
-    {
-      "name": "downprod",
-      "variable": "101",
-      "description": "Arrêt du Frontend en prod",
-      "environnement": "Production"
-    },
-    {
-      "name": "updev",
-      "variable": "101",
-      "description": "Lancement du Frontend en développement",
-      "environnement": "Développement"
-    },
-    {
-      "name": "downprod",
-      "variable": "101",
-      "description": "Arrêt du Frontend en développement",
-      "environnement": "Développement"
-    },
+// Données des catégories de commandes extraites de deno.json
+const categories = {
+  "DOCKER-COMPOSE": [
+    { name: "up", description: "Lancer Docker Compose en mode détaché" },
+    { name: "uplog", description: "Lancer Docker Compose avec logs" },
+    { name: "upbuild", description: "Lancer Docker Compose avec rebuild des images" },
+    { name: "down", description: "Arrêter Docker Compose en mode détaché" },
+    { name: "downlog", description: "Arrêter Docker Compose avec logs" },
+    { name: "restart", description: "Redémarrer Docker Compose" },
   ],
-  "services": [
-    "101",
-    "102"
+  "DOCKER SWARM": [
+    { name: "deploy", description: "Déployer avec Docker Swarm" },
+    { name: "stop", description: "Arrêter Docker Swarm" },
   ],
-  "version": "1.0.0"
+  "APP": [
+    { name: "cloneftd", description: "Cloner une application FTD" },
+    { name: "update", description: "Mettre à jour l'application" },
+    { name: "diagsrv", description: "Diagnostiquer le serveur" },
+    { name: "cvtvol", description: "Convertir les volumes Docker" },
+    { name: "installapp", description: "Installer une application" },
+  ],
+  "GITHUB": [
+    { name: "setupuser", description: "Configurer un utilisateur GitHub" },
+    { name: "addapp", description: "Ajouter une application GitHub" },
+    { name: "push", description: "Envoyer des changements sur GitHub" },
+    { name: "pull", description: "Récupérer des changements depuis GitHub" },
+  ],
 };
 
-const table = new Table()
-  .header(["Commande", "# Service", "Description", "Catégorie"])
-  .body(data.commands.map(cmd => [
-    colors.green(cmd.name),
-    colors.blue(cmd.variable),
-    cmd.description,
-    cmd.environnement
-  ]))
-  .border(true);
-console.log()
-console.log(`Version : ${data.version}`);
-console.log(table.toString());
-console.log()
+// Fonction pour afficher les commandes d'une catégorie
+function displayCategory(categoryName: string) {
+  const category = categories[categoryName];
+  if (!category) {
+    console.log(colors.red(`Erreur : Catégorie non trouvée : ${categoryName}`));
+    return;
+  }
 
-// Affichage des catégories disponibles
-console.log("Services disponibles :");
-data.services.forEach(service => {
-  console.log(colors.blue(` ${service}`));
-});
+  const table = new Table()
+    .header([colors.bold("Commande"), colors.bold("Description")])
+    .body(category.map((cmd) => [colors.green(cmd.name), cmd.description]))
+    .border(true);
 
-// Mettez à jour les importations std vers la dernière version
-import { Table } from "https://deno.land/x/cliffy@v1.0.0-rc.3/table/mod.ts";
-import * as colors from "https://deno.land/std@0.200.0/fmt/colors.ts";
+  console.log(colors.yellow(`\nCommandes pour la catégorie : ${categoryName}\n`));
+  console.log(table.toString());
+}
 
-// Si vous importez des fichiers JSON, utilisez la syntaxe 'with' au lieu de 'assert'
-const data = {
-  "commands": [
-    {
-      "name": "allowdl",
-      "variable": "path/to/dir",
-      "description": "Autorise le sudo à David",
-      "etat": "active"
-    },
-    {
-      "name": "allowml",
-      "variable": "path/to/dir",
-      "description": "Autorise le sudo à Martin",
-      "etat": "active"
-    },
-    {
-      "name": "nginx",
-      "variable": "start|stop|restart",
-      "description": "Gestion du Nginx",
-      "etat": "inactive"
-    },
-    {
-      "name": "githubclone",
-      "variable": "301",
-      "description": "Clone les services de Github",
-      "etat": "inactive"
-    },
-    {
-      "name": "gitlabclone",
-      "variable": "301",
-      "description": "Clone les services du Gitlab",
-      "etat": "inactive"
-    },
-    {
-      "name": "gitpull",
-      "variable": "301",
-      "description": "Télécharge les mises à jour des services du Gitlab",
-      "etat": "inactive"
-    },
-    {
-      "name": "gitpush",
-      "variable": "301",
-      "description": "Envoie les modifications sur Github et Gitlab",
-      "etat": "inactive"
-    },
-    {
-      "name": "gitserver",
-      "variable": "pull|status|push",
-      "description": "Gestion du Git du Nginx",
-      "etat": "inactive"
-    },
-    {
-      "name": "server",
-      "variable": "update",
-      "description": "Mise à jour du Server et des services",
-      "etat": "inactive"
-    },
-  ],
-  "services": [
-    "101",
-    "102"
-  ],
-  "version": "1.0.0"
-};
+// Fonction principale
+function main() {
+  const args = Deno.args;
+  if (args.length === 0) {
+    console.log(colors.yellow("Utilisation : deno run --allow-read script.ts <catégorie>"));
+    console.log(colors.green("\nCatégories disponibles :"));
+    Object.keys(categories).forEach((cat) => console.log(`- ${colors.blue(cat)}`));
+    return;
+  }
 
-const table = new Table()
-  .header(["Commande", "# Variable", "Description", "État"])
-  .body(data.commands.map(cmd => [
-    colors.green(cmd.name),
-    colors.blue(cmd.variable),
-    cmd.description,
-    cmd.etat
-  ]))
-  .border(true);
-console.log()
-console.log(`Version : ${data.version}`);
-console.log(table.toString());
-console.log()
+  const categoryName = args[0].toUpperCase();
+  displayCategory(categoryName);
+}
 
-// Affichage des catégories disponibles
-/*console.log("Services disponibles :");
-data.services.forEach(service => {
-  console.log(colors.blue(` ${service}`));
-});*/
+main();
+
