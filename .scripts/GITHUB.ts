@@ -243,7 +243,7 @@ async function runCommand(cmd: string[]): Promise<string | null> {
         repoPath,
         "config",
         "core.sshCommand",
-        `ssh -F ${userHome}/.ssh/config github-juwju`
+        `ssh -F ${userHome}/.ssh/config`
       ],
     }).status();
       
@@ -262,7 +262,7 @@ async function runCommand(cmd: string[]): Promise<string | null> {
       return;
     }
     const basePath = home;
-    const configContent = `Host ${hostAlias}
+    const configContent = `Host github.com
       HostName github.com
       User git
       IdentityFile ${identityFile}
