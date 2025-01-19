@@ -221,7 +221,19 @@ async function runCommand(cmd: string[]): Promise<string | null> {
     }
   }
   
-
+  async function configureJuwjuRepo() {
+    // 1. Retirer core.sshCommand global
+    await Deno.run({ cmd: ["git", "config", "--global", "--unset", "core.sshCommand"] }).status();
+  
+    // 2. Définir le core.sshCommand local pour le répertoire /var/JUWJU/app
+    const repoPath = "/var/JUWJU/app";
+    await Deno.run({
+      cmd: ["git", "-C", repoPath, "config", "core.sshCommand", "ssh -F /var/JUWJU/.ssh/config github-juwju"],
+    }).status();
+    
+    console.log("Configuration globale supprimée et config locale pour juwju appliquée.");
+  }
+  
 
 
 
@@ -242,7 +254,11 @@ async function runCommand(cmd: string[]): Promise<string | null> {
         console.log("Veuillez spécifier un nom d'utilisateur pour setupuser.");
         Deno.exit(1);
       }
+      configureJuwjuRepo
       await setupUser(username);
+      if (username === "juwju") {
+        await configureJuwjuRepo();
+      }
       break;
   
     default:
