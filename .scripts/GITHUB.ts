@@ -16,7 +16,7 @@
 // PUSH
 // ...
 
-  async function runCommand(cmd: string[]): Promise<string | null> {
+async function runCommand(cmd: string[]): Promise<string | null> {
     try {
       const process = new Deno.Command(cmd[0], {
         args: cmd.slice(1),
@@ -24,13 +24,18 @@
         stderr: "piped",
       }).spawn();
   
-      const { stdout } = await process.output();
-      return new TextDecoder().decode(stdout).trim();
+      const { stdout, stderr } = await process.output();
+      const outText = new TextDecoder().decode(stdout).trim();
+      const errText = new TextDecoder().decode(stderr).trim();
+  
+      // On retourne la concaténation des deux
+      return (outText + (errText ? "\n" + errText : "")).trim();
     } catch (error) {
       console.error(`Erreur lors de l'exécution de la commande : ${cmd.join(" ")}`, error);
-      return null; // Retourne null si la commande échoue
+      return null;
     }
   }
+  
   
   async function ask(question: string): Promise<string> {
     console.log(question);
@@ -96,14 +101,13 @@
       await runCommand(["ssh-keygen", "-t", "ed25519", "-C", email, "-f", sshKeyPath, "-N", ""]);
       console.log("Clé SSH générée avec succès.");
     } else {
-      // Vérifie si la clé existe
       try {
         await Deno.stat(`${sshKeyPath}.pub`);
         console.log("Clé SSH existante trouvée.");
       } catch {
         console.error(`Erreur : La clé SSH spécifiée n'existe pas (${sshKeyPath}.pub).`);
         console.log(
-          "Veuillez vérifier le chemin ou choisir de générer une nouvelle clé en relançant le script.",
+          "Veuillez vérifier le chemin ou choisir de générer une nouvelle clé en relançant le script."
         );
         return;
       }
@@ -111,10 +115,18 @@
   
     console.log("Ajout de la clé au SSH agent...");
     try {
-      // Démarrer le SSH agent
-      await runCommand(["ssh-agent", "-s"]);
+      const agentOutput = await runCommand(["ssh-agent", "-s"]);
+      if (agentOutput) {
+        const lines = agentOutput.split("\n");
+        for (const line of lines) {
+          const match = /(\S+)=(\S+);/.exec(line);
+          if (match) {
+            Deno.env.set(match[1], match[2]);
+          }
+        }
+      }
+      console.log("SSH agent démarré.");
   
-      // Ajouter la clé au SSH agent
       await runCommand(["ssh-add", sshKeyPath]);
       console.log("Clé ajoutée au SSH agent avec succès.");
     } catch (error) {
@@ -126,17 +138,37 @@
     try {
       const pubKey = await Deno.readTextFile(`${sshKeyPath}.pub`);
       console.log(pubKey);
+      console.log("Ajoutez cette clé à GitHub via https://github.com/settings/ssh/new\n");
     } catch (error) {
       console.error(
         `Erreur lors de la lecture de la clé publique (${sshKeyPath}.pub) :`,
-        error,
+        error
       );
       return;
     }
   
-    console.log("Ajoutez cette clé à GitHub via https://github.com/settings/ssh/new\n");
+    // Vérification des permissions sur .ssh
+    try {
+      await runCommand(["chmod", "700", `${Deno.env.get("HOME")}/.ssh`]);
+      await runCommand(["chmod", "600", sshKeyPath]);
+      await runCommand(["chmod", "600", `${sshKeyPath}.pub`]);
+      console.log("Permissions sur .ssh configurées correctement.");
+    } catch (error) {
+      console.error("Erreur lors de la configuration des permissions sur .ssh :", error);
+    }
   
-    // Configurer le fichier SSH
+    // Ajout de l'hôte GitHub aux known_hosts
+    try {
+      await runCommand(["ssh-keyscan", "github.com", ">>", `${Deno.env.get("HOME")}/.ssh/known_hosts`]);
+      console.log("Clé d'hôte GitHub ajoutée à known_hosts.");
+    } catch (error) {
+      console.error(
+        "Erreur lors de l'ajout de la clé d'hôte GitHub à known_hosts :",
+        error
+      );
+    }
+  
+    // Configuration du fichier ~/.ssh/config
     const sshConfigPath = `${Deno.env.get("HOME")}/.ssh/config`;
     const sshConfigContent = `
   Host github-${username}
@@ -147,47 +179,53 @@
   `;
   
     try {
-      await Deno.writeTextFile(sshConfigPath, sshConfigContent, { append: true });
-      console.log(`Configuration SSH ajoutée pour l'utilisateur : ${username}`);
-      
-      // Forcer Git à utiliser cette configuration
-      await runCommand([
-        "git",
-        "config",
-        "--global",
-        "core.sshCommand",
-        `ssh -F ${sshConfigPath} github-${username}`,
-      ]);
-      
-      console.log("Configuration Git mise à jour pour utiliser cette clé.");
-      
+      let existingConfig = "";
+      try {
+        existingConfig = await Deno.readTextFile(sshConfigPath);
+      } catch {} // Ignorer si le fichier n'existe pas
+  
+      if (!existingConfig.includes(`Host github-${username}`)) {
+        await Deno.writeTextFile(sshConfigPath, sshConfigContent, { append: true });
+        console.log(`Configuration SSH ajoutée pour l'utilisateur : ${username}`);
+      } else {
+        console.log(`Configuration SSH déjà présente pour l'utilisateur : ${username}`);
+      }
     } catch (error) {
-      console.error("Erreur lors de l'écriture du fichier SSH config :", error);
-      return;
+      console.error(
+        "Erreur lors de l'écriture ou vérification du fichier SSH config :",
+        error
+      );
     }
   
-    await ask("Appuyez sur Entrée une fois la clé ajoutée à GitHub.");
-  
+    // Test de connexion à GitHub en mode debug
     console.log("Test de connexion à GitHub...");
     try {
-        console.log(`Validation de la connexion avec la clé configurée ${sshKeyPath}...`);
-        const testSSH = await runCommand(["ssh", "-i", sshKeyPath, "-T", "git@github.com"]);
-        console.log(`Retour du test : ${testSSH}`);
-        if (testSSH?.includes("successfully authenticated")) {
-        console.log("Connexion réussie avec la clé configurée !");
-        } else {
-        console.error("Test échoué : La connexion SSH n'a pas été authentifiée.");
-        console.error(testSSH || "Aucune sortie détectée.");
-        }
-      
-      console.log(testSSH);
-      
-  } catch(error){
+      const testSSH = await runCommand([
+        "ssh",
+        "-v",
+        "-F",
+        sshConfigPath,
+        "-T",
+        `github-${username}`,
+      ]);
+      if (testSSH?.includes("successfully authenticated")) {
+        console.log("Connexion réussie !");
+      } else {
+        console.error("Test échoué :", testSSH || "Aucune sortie détectée.");
+      }
+    } catch (error) {
       console.error(
-      "Test Échoué! Vérifiez que clef publique est bien lié"
-  )}
-}
+        "Erreur lors du test de connexion à GitHub. Vérifiez votre configuration.",
+        error
+      );
+    }
+  }
   
+
+
+
+
+
   // Lecture des arguments passés via la ligne de commande
   const args = Deno.args;
   const command = args[0];
