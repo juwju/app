@@ -1,10 +1,15 @@
+# Ignorer les fichiers sensibles
 *.env
-*.env
-# Ignorer tous les répertoires
+
+# Ignorer tous les répertoires par défaut
 */
 
-# Inclure uniquement les répertoires qui commencent par un point
+# Inclure uniquement les répertoires cachés (commençant par un point)
 !/.*/
+
+# Inclure explicitement deno.json
 !deno.json
-# Ignorer tout le contenu des répertoires inclus par défaut
-.*/*
+
+# Inclure explicitement le répertoire ./scripts et tout son contenu
+!./scripts/
+
