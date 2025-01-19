@@ -3,12 +3,12 @@
 // Si c'est l'utilisateur actuel, clone le repo app, si Juwju, clone app pour production dans var/Juwju
 
 // ADDUSER
-// 1. Prise des information utilisateur             Note seulement, Non testé
-// 2. Vérifier le chemin d'accès complet            Note seulement, Non testé
-// 3. Configurer le fichier SSH config              Note seulement, Non testé
-// 4. Cloner le dépot                               Note seulement, Non testé
-// 5. Configurer les permissions                    Note seulement, Non testé
-// 6. Cloner le repo app                            Note seulement, Non testé
+// 1. Prise des information utilisateur             OK
+// 2. Vérifier le chemin d'accès complet            OK
+// 3. Configurer le fichier SSH config              OK
+// 4. Cloner le dépot                               OK
+// 5. Configurer les permissions                    OK
+// 6. Cloner le repo app                            OK
 
 // PULL
 // ...
