@@ -222,19 +222,67 @@ async function runCommand(cmd: string[]): Promise<string | null> {
   }
   
   async function configureJuwjuRepo() {
+    // Initialisation du répertoire SSH pour juwju
+    await ensureSSHDir("/var/JUWJU", "github-juwju", "/var/JUWJU/.ssh/id_ed25519");
+  
     // 1. Retirer core.sshCommand global
     await Deno.run({ cmd: ["git", "config", "--global", "--unset", "core.sshCommand"] }).status();
   
     // 2. Définir le core.sshCommand local pour le répertoire /var/JUWJU/app
     const repoPath = "/var/JUWJU/app";
     await Deno.run({
-      cmd: ["git", "-C", repoPath, "config", "core.sshCommand", "ssh -F /var/JUWJU/.ssh/config github-juwju"],
+      cmd: [
+        "git",
+        "-C",
+        repoPath,
+        "config",
+        "core.sshCommand",
+        "ssh -F /var/JUWJU/.ssh/config github-juwju"
+      ],
     }).status();
-    
+      
     console.log("Configuration globale supprimée et config locale pour juwju appliquée.");
   }
   
-
+  
+  async function ensureSSHDir(
+    basePath: string,
+    hostAlias: string,
+    identityFile: string
+  ) {
+    const configContent = `Host ${hostAlias}
+      HostName github.com
+      User git
+      IdentityFile ${identityFile}
+      IdentitiesOnly yes`;
+  
+    // Création et configuration du répertoire .ssh
+    await runCommand(["sudo", "mkdir", "-p", `${basePath}/.ssh`]);
+    await runCommand(["sudo", "chmod", "700", `${basePath}/.ssh`]);
+    await runCommand(["sudo", "touch", `${basePath}/.ssh/config`]);
+    await runCommand(["sudo", "chmod", "600", `${basePath}/.ssh/config`]);
+    
+    // Ajout du contenu de configuration
+    await runCommand([
+      "sudo",
+      "bash",
+      "-c",
+      `echo '${configContent}' >> ${basePath}/.ssh/config`
+    ]);
+  
+    // Changer le propriétaire sur le dossier .ssh vers l'utilisateur courant
+    const currentUser = Deno.env.get("USER") || "";
+    await runCommand([
+      "sudo",
+      "chown",
+      "-R",
+      `${currentUser}:${currentUser}`,
+      `${basePath}/.ssh`
+    ]);
+  
+    console.log(`${basePath}/.ssh/config initialisé.`);
+  }
+  
 
 
 
@@ -254,14 +302,14 @@ async function runCommand(cmd: string[]): Promise<string | null> {
         console.log("Veuillez spécifier un nom d'utilisateur pour setupuser.");
         Deno.exit(1);
       }
-      configureJuwjuRepo
-      await setupUser(username);
       if (username === "juwju") {
         await configureJuwjuRepo();
       }
+      await setupUser(username);
       break;
   
     default:
       console.log("Commande inconnue. Utilisez : setupuser, addapp, push, pull");
   }
+  
   
