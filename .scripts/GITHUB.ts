@@ -222,8 +222,14 @@ async function runCommand(cmd: string[]): Promise<string | null> {
   }
   
   async function configureJuwjuRepo() {
-    // Initialisation du répertoire SSH pour juwju
-    await ensureSSHDir("/var/JUWJU", "github-juwju", "/var/JUWJU/.ssh/id_ed25519");
+    const userHome = Deno.env.get("HOME");
+    if (!userHome) {
+      console.error("Impossible de déterminer le répertoire home.");
+      return;
+    }
+  
+    // Utilisation de la fonction générique pour initialiser ~/.ssh/config
+    await ensureSSHDir("github-juwju", `${userHome}/.ssh/id_ed25519`);
   
     // 1. Retirer core.sshCommand global
     await Deno.run({ cmd: ["git", "config", "--global", "--unset", "core.sshCommand"] }).status();
@@ -237,7 +243,7 @@ async function runCommand(cmd: string[]): Promise<string | null> {
         repoPath,
         "config",
         "core.sshCommand",
-        "ssh -F /var/JUWJU/.ssh/config github-juwju"
+        `ssh -F ${userHome}/.ssh/config github-juwju`
       ],
     }).status();
       
@@ -245,11 +251,17 @@ async function runCommand(cmd: string[]): Promise<string | null> {
   }
   
   
+  
   async function ensureSSHDir(
-    basePath: string,
     hostAlias: string,
     identityFile: string
   ) {
+    const home = Deno.env.get("HOME");
+    if (!home) {
+      console.error("Impossible de déterminer le répertoire home.");
+      return;
+    }
+    const basePath = home;
     const configContent = `Host ${hostAlias}
       HostName github.com
       User git
@@ -257,14 +269,13 @@ async function runCommand(cmd: string[]): Promise<string | null> {
       IdentitiesOnly yes`;
   
     // Création et configuration du répertoire .ssh
-    await runCommand(["sudo", "mkdir", "-p", `${basePath}/.ssh`]);
-    await runCommand(["sudo", "chmod", "700", `${basePath}/.ssh`]);
-    await runCommand(["sudo", "touch", `${basePath}/.ssh/config`]);
-    await runCommand(["sudo", "chmod", "600", `${basePath}/.ssh/config`]);
+    await runCommand(["mkdir", "-p", `${basePath}/.ssh`]);
+    await runCommand(["chmod", "700", `${basePath}/.ssh`]);
+    await runCommand(["touch", `${basePath}/.ssh/config`]);
+    await runCommand(["chmod", "600", `${basePath}/.ssh/config`]);
     
     // Ajout du contenu de configuration
     await runCommand([
-      "sudo",
       "bash",
       "-c",
       `echo '${configContent}' >> ${basePath}/.ssh/config`
@@ -273,7 +284,6 @@ async function runCommand(cmd: string[]): Promise<string | null> {
     // Changer le propriétaire sur le dossier .ssh vers l'utilisateur courant
     const currentUser = Deno.env.get("USER") || "";
     await runCommand([
-      "sudo",
       "chown",
       "-R",
       `${currentUser}:${currentUser}`,
@@ -282,6 +292,7 @@ async function runCommand(cmd: string[]): Promise<string | null> {
   
     console.log(`${basePath}/.ssh/config initialisé.`);
   }
+  
   
 
 
